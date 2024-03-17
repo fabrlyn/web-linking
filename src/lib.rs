@@ -1,3 +1,6 @@
+pub mod target_attribute;
+pub mod token;
+
 use std::error::Error;
 
 use nom::{
@@ -12,8 +15,8 @@ use nom::{
 
 #[derive(Debug, PartialEq)]
 pub struct Link<'a> {
-    value: Value<'a>,
-    parameters: Vec<Parameter<'a>>,
+    pub value: Value<'a>,
+    pub parameters: Vec<Parameter<'a>>,
 }
 
 impl<'a> Link<'a> {
@@ -33,7 +36,7 @@ impl<'a> Link<'a> {
 
 #[derive(Debug, PartialEq)]
 pub struct Value<'a> {
-    value: &'a str,
+    pub value: &'a str,
 }
 
 impl<'a> Value<'a> {
