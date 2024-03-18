@@ -1,4 +1,4 @@
-use nom::{bytes::complete::take_while1, error};
+use nom::{bytes::complete::take_while1, combinator::map, IResult};
 
 const OTHER_CHARACTERS: [char; 15] = [
     '!', '#', '$', '%', '&', '\'', '*', '+', '-', '.', '^', '_', '`', '|', '~',
@@ -9,10 +9,11 @@ pub struct Token<'a>(&'a str);
 
 impl<'a> Token<'a> {
     pub fn parse(input: &'a str) -> Option<(&'a str, Token<'a>)> {
-        // TODO: Figure out why this type can't be inferred.
-        take_while1::<_, _, error::Error<&str>>(is_token_character)(input)
-            .ok()
-            .map(|(rest, token)| (rest, Token(token)))
+        Token::parse_internal(input).ok()
+    }
+
+    pub(crate) fn parse_internal(input: &'a str) -> IResult<&'a str, Token<'a>> {
+        map(take_while1(is_token_character), Token)(input)
     }
 }
 
