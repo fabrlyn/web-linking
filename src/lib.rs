@@ -1,8 +1,8 @@
-pub mod target_attribute;
 pub mod http;
-pub mod token;
 pub mod link;
 pub mod links;
+pub mod target_attribute;
+pub mod token;
 
 use std::error::Error;
 
